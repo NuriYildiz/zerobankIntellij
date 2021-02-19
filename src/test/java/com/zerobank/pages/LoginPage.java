@@ -8,20 +8,32 @@ import org.openqa.selenium.support.PageFactory;
 public class LoginPage {
 
     public LoginPage() {
+
         PageFactory.initElements(Driver.get(), this);
     }
 
-    @FindBy(id = "prependedInput")
+    @FindBy(id = "user_login")
     public WebElement userName;
 
-    @FindBy(id = "prependedInput2")
+    @FindBy(id = "user_password")
     public WebElement password;
 
-    @FindBy(name = "_submit")
+    @FindBy(name = "submit")
     public WebElement submit;
 
+    @FindBy(id = "primary-button")
+    public WebElement ErrorPageBackToSafety;
+
+    @FindBy(id = "signin_button")
+    public WebElement signinButton;
+
+    @FindBy(xpath = " //*[@id='login_form']/div[1]")
+    public WebElement errorMessage;
+
+    public String expectedErrorMessage = "Login and/or password are wrong.";
 
     public void login(String userNameStr, String passwordStr) {
+        signinButton.click();
         userName.sendKeys(userNameStr);
         password.sendKeys(passwordStr);
         submit.click();

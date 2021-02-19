@@ -16,24 +16,48 @@ public class LoginStepDefins {
     @Given("the user is on the login page")
     public void the_user_is_on_the_login_page() throws InterruptedException {
         String url = ConfigurationReader.get("url");
-        //WebDriver driver = Driver.get();
+
         Driver.get().get(url);
     }
 
-    @When("the user enters the username")
+    @When("the user enters valid username and password")
     public void the_user_enters_the_driver_information() throws InterruptedException {
-        String username = ConfigurationReader.get("driver_username");
-        String password = ConfigurationReader.get("driver_password");
+        String username = ConfigurationReader.get("username");
+        String password = ConfigurationReader.get("password");
 
         LoginPage loginPage = new LoginPage();
-        loginPage.login(username,password);
+        loginPage.login(username, password);
+        loginPage.ErrorPageBackToSafety.click();
     }
 
     @Then("the user should be able to login")
     public void the_user_should_be_able_to_login() throws InterruptedException {
-        BrowserUtils.waitFor(3);
         String actualTitle = Driver.get().getTitle();
-        Assert.assertEquals("Dashboard",actualTitle);
+        Assert.assertEquals("Zero - Personal Banking - Loans - Credit Cards", actualTitle);
+    }
+
+//    @Then("the user should be able to login")
+//    public void the_user_should_be_able_to_login() throws InterruptedException {
+//        BrowserUtils.waitFor(3);
+//        String actualTitle = Driver.get().getTitle();
+//        Assert.assertEquals("Dashboard",actualTitle);
+
+    @When("user tries to login with invalid {string} or {string}")
+    public void user_tries_to_login_with_invalid_or(String username, String password) {
+        LoginPage loginpage = new LoginPage();
+        loginpage.login(username, password);
 
     }
+
+    @Then("error message Login and|or password are wrong should be displayed")
+    public void error_message_Login_and_or_password_are_wrong_should_be_displayed() {
+        LoginPage loginPage = new LoginPage();
+        Assert.assertEquals(loginPage.expectedErrorMessage, loginPage.errorMessage.getText());
+    }
+
+
 }
+
+
+
+
