@@ -16,7 +16,6 @@ public class LoginStepDefins {
     @Given("the user is on the login page")
     public void the_user_is_on_the_login_page() throws InterruptedException {
         String url = ConfigurationReader.get("url");
-
         Driver.get().get(url);
     }
 
@@ -35,12 +34,6 @@ public class LoginStepDefins {
         String actualTitle = Driver.get().getTitle();
         Assert.assertEquals("Zero - Personal Banking - Loans - Credit Cards", actualTitle);
     }
-
-//    @Then("the user should be able to login")
-//    public void the_user_should_be_able_to_login() throws InterruptedException {
-//        BrowserUtils.waitFor(3);
-//        String actualTitle = Driver.get().getTitle();
-//        Assert.assertEquals("Dashboard",actualTitle);
 
     @When("user tries to login with invalid {string} or {string}")
     public void user_tries_to_login_with_invalid_or(String username, String password) {
